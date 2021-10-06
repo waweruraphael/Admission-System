@@ -1,7 +1,7 @@
 <?php
 include('functions.php');
-if (!isLoggedIn()){
-    $_SESSION["msg"]="Please Login";
+if (!isLoggedIn()) {
+    $_SESSION["msg"] = "Please Login";
     header('location:index.php?sub-cat default');
 }
 
@@ -48,23 +48,31 @@ if (!isLoggedIn()){
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+                    <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <option selected>Open this select menu</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Admission List</h6>
+
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                            <?php
-                                            require_once('db/db.php');
+                                <?php
+                                require_once('db/db.php');
 
-                                            $sql = "SELECT User_ID,Surname,Firstname,Lastname,Gender,Admission_year FROM personal_details";
-                                            $result = $conn->query($sql);
-                                            $arr_users = [];
-                                            if ($result->num_rows > 0) {
-                                                $arr_users = $result->fetch_all(MYSQLI_ASSOC);
-                                            }
-                                            ?>
+                                $sql = "SELECT User_ID,Surname,Firstname,Lastname,Gender,Admission_year,Photo FROM personal_details";
+                                $result = $conn->query($sql);
+                                $arr_users = [];
+                                if ($result->num_rows > 0) {
+                                    $arr_users = $result->fetch_all(MYSQLI_ASSOC);
+                                }
+                                ?>
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -74,26 +82,28 @@ if (!isLoggedIn()){
                                             <th>Lastname</th>
                                             <th>Gender</th>
                                             <th>Admission_year</th>
+                                            <th>Image</th>
                                             <th>Edit</th>
-                                            <th>Delete</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php if (!empty($arr_users)) { ?>
-                                                        <?php foreach ($arr_users as $user) { ?>
-                                                            <tr>
-                                                                <td><?php echo $user['User_ID']; ?></td>
-                                                                <td><?php echo $user['Surname']; ?></td>
-                                                                <td><?php echo $user['Firstname']; ?></td>
-                                                                <td><?php echo $user['Lastname']; ?></td>
-                                                                <td><?php echo $user['Gender']; ?></td>
-                                                                <td><?php echo $user['Admission_year'];?></td>
-                                                                <td><a href="dashboard.php?cat=contact&subcat=contact-email&edit=<?php echo $data['id']; ?>" class="text-success content-link"><i class=' far fa-edit'></i></a></td>
-                                                                <td><a href="#" class="text-danger delete" name="contact_email" id="<?php echo $data['id']; ?>"><i class='far fa-trash-alt'></i></a></td>
-                                                            </tr>
-                                                        <?php } ?>
-                                                    <?php } ?>
-                                    
+                                        <?php if (!empty($arr_users)) { ?>
+                                            <?php foreach ($arr_users as $user) { ?>
+                                                <tr>
+                                                    <td><?php echo $user['User_ID']; ?></td>
+                                                    <td><?php echo $user['Surname']; ?></td>
+                                                    <td><?php echo $user['Firstname']; ?></td>
+                                                    <td><?php echo $user['Lastname']; ?></td>
+                                                    <td><?php echo $user['Gender']; ?></td>
+                                                    <td><?php echo $user['Admission_year']; ?></td>
+                                                    <td><?php echo "<img style='width: 50px; length: 50px;' src='images/" . $user['Photo'] . "' >"; ?></td>
+                                                    <td><a href="dashboard.php?cat=contact&subcat=contact-email&edit=<?php echo $data['id']; ?>" class="text-success content-link"><i class=' far fa-edit'></i></a></td>
+
+                                                </tr>
+                                            <?php } ?>
+                                        <?php } ?>
+
                                     </tbody>
                                 </table>
                             </div>

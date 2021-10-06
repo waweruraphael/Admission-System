@@ -1,3 +1,10 @@
+<?php
+include('functions.php');
+if (!isLoggedIn()) {
+    $_SESSION["msg"] = "Please Login";
+    header('location:login.php?sub-cat default');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +17,7 @@
     <meta name="author" content="">
     <title>Dashboard</title>
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -45,77 +52,77 @@
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-                                    <form action="hospitaldetail.php" method="POST">
+                                    <form action="hospitaldetail.php" method="POST" enctype="multipart/form-data">
                                         <p>Personal Information</p>
-                                        <div class="row">   
-                                        <div class="mb-3">
-                                            <input name="User_ID" class="form-control" placeholder="Registation Number" type="text">
-                                        </div> <!-- form-group// -->
+                                        <div class="row">
+                                            <div class="mb-3">
+                                                <input name="User_ID" class="form-control" value="<?php echo $_SESSION['suser']['User_ID']; ?>" type="text" disabled>
+                                            </div> <!-- form-group// -->
                                         </div>
                                         <hr class="form-divider">
                                         <div class="form-group">
                                             <p>Have You ever been in an in-patient hospital or nursing home?If so when and for what complaints</p>
                                             <textarea class="form-control" aria-label="With textarea" name="Inpatient_record"></textarea>
                                         </div>
-                                        							
+
                                         <hr class="form-divider">
                                         <p>Have you suffered from or has symptom of any of the following</p>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms" value="Tuberculosis" id="">
+                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms []" value="Tuberculosis" id="">
                                             <label class="form-check-label" for="flexCheckDefault">
                                                 Tuberculosis or other chest infection
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms" value="Fits" id="">
+                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms []" value="Fits" id="">
                                             <label class="form-check-label" for="flexCheckChecked">
                                                 Fits, Nervous disease or fainting attacks
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms" value="Rheumatic fever" id="">
+                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms []" value="Rheumatic fever" id="">
                                             <label class="form-check-label" for="flexCheckChecked">
                                                 Heart Disease or Rheumatic fever
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms" value="digestive-disease" id="">
+                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms []" value="digestive-disease" id="">
                                             <label class="form-check-label" for="flexCheckChecked">
                                                 Any diseases of the digestive system
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms" value="Urinary-disease" id="">
+                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms []" value="Urinary-disease" id="">
                                             <label class="form-check-label" for="flexCheckChecked">
                                                 Any disease of the Genital-Urinary System
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox"  name="Suffered_symptoms" value="Allergies" id="">
+                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms []" value="Allergies" id="">
                                             <label class="form-check-label" for="flexCheckChecked">
                                                 Allergies to food or drugs
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms" value="Malaria" id="">
+                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms []" value="Malaria" id="">
                                             <label class="form-check-label" for="flexCheckChecked">
                                                 Malaria
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms" value="STI" id="">
+                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms []" value="STI" id="">
                                             <label class="form-check-label" for="flexCheckChecked">
                                                 Sexually Transmitted Disease
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms" value="polio" id="">
+                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms []" value="polio" id="">
                                             <label class="form-check-label" for="flexCheckChecked">
                                                 Poliomyelitis
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms" value="deformity" id="">
+                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms []" value="deformity" id="">
                                             <label class="form-check-label" for="flexCheckChecked">
                                                 Any physical defect or deformity
                                             </label>
@@ -133,31 +140,45 @@
                                         <div>
                                             <p>Have you been immunized against the following diseases?</p>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox"  name="Immunization" value="small pox" id="">
+                                                <input class="form-check-input" type="checkbox" name="Immunization []" value="small pox" id="">
                                                 <label class="form-check-label" for="flexCheckChecked">
                                                     Smaillpox
                                                 </label>
                                             </div>
-                                            <input type="text" name="Immunization_year" id=""  placeholder="Date">
+
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="Immunization" value="Tetanus" id="">
+                                                <input class="form-check-input" type="checkbox" name="Immunization []" value="Tetanus" id="">
                                                 <label class="form-check-label" for="flexCheckChecked">
                                                     Tetanus
                                                 </label>
                                             </div>
-                                            <input type="text" name="Immunization_year" id="" placeholder="Date">
+
                                             <div class="form-check">
-                                                <input class="form-check-input"  type="checkbox" name="Immunization" value="Poliomyelitis" id="">
+                                                <input class="form-check-input" type="checkbox" name="Immunization []" value="Poliomyelitis" id="">
                                                 <label class="form-check-label" for="flexCheckChecked">
-                                                Poliomyelitis
+                                                    Poliomyelitis
                                                 </label>
                                             </div>
-                                            <input  class="col-sm-3-form-control" type="text" name="Immunization_year" id="" placeholder="Date">
+
+
+                                            <div class="mb-3">
+                                                <label for="formFile" class="form-label">Medical Report</label>
+                                                <input class="form-control" type="file" id="image" name="Photo">
+                                            </div>
+
+
                                         </div>
-                                        
-                                        <div class=" col-sm-2">
-                                            <button type="submit" class="btn btn-primary btn-block" name="btn-health">Submit </button>
-                                        </div> <!-- form-group// -->
+                                        <div class="row">
+                                            <div class=" col-sm-2">
+                                                <button type="submit" class="btn btn-primary btn-block" name="btn-health">Submit </button>
+                                            </div> <!-- form-group// -->
+                                            <div class=" col-sm-2">
+                                                <button type="submit" id="update" class="btn btn-secondary btn-block" name="update-health">Update</button>
+                                            </div> <!-- form-group// -->
+
+                                        </div>
+
+
                                     </form>
                                 </div>
                             </div>

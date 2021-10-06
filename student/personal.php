@@ -19,7 +19,7 @@ if (!isLoggedIn()) {
     <title>Dashboard</title>
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
@@ -105,7 +105,7 @@ if (!isLoggedIn()) {
                                         <div class="row">
                                             <div class="mb-3">
                                                 <label>Email </label>
-                                                <input class="form-control" type="email" name="Email" id="email">
+                                                <input class="form-control" type="email" name="Email" >
                                             </div>
                                             <div class="col-sm-3">
                                                 <label>Phone number</label>
@@ -113,7 +113,7 @@ if (!isLoggedIn()) {
                                             </div>
                                             <div class="col-sm-3">
                                                 <label>Date Of Birth</label>
-                                                <input class="form-control" type="date" name="DOB" id="" required>
+                                                <input class="form-control" type="date" name="DOB" id="" >
 
                                             </div>
 

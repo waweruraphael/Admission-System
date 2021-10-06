@@ -19,7 +19,7 @@ if (!isLoggedIn()) {
     <title>Dashboard</title>
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
@@ -65,7 +65,7 @@ if (!isLoggedIn()) {
                     <div class="row">
 
                         <!-- Area Chart -->
-                        <div class="col-xl-4 col-lg-7">
+                        <div class="col-xl-6 col-lg-7">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -104,6 +104,41 @@ if (!isLoggedIn()) {
 
                                         </tbody>
                                     </table>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-xl-5 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Student Information</h6>
+                                    
+                                    
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                <?php
+                                    echo $_SESSION['suser']['Photo'];
+                                    
+                                ?>
+                                 <hr class="sidebar-divider">
+                                 <?php
+                                    $result = "SELECT personal_details.'".$_SESSION ['suser']['User_ID']."',courses.Description, personal_details.Admission_year\n"
+
+                                    . "FROM personal_details\n"
+                                
+                                    . "INNER JOIN courses\n"
+                                
+                                    . "ON personal_details.course_code=courses.course_code";
+                                    while ($row = mysqli_fetch_array($conn,$result)) {
+                                        printf("ID: %s  Name: %s",  $row["Description"]);
+                                    }
+                                    
+                                    mysqli_free_result($conn,$result);
+
+                                ?>
+                                    
                                 </div>
                             </div>
                         </div>

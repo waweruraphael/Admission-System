@@ -50,6 +50,44 @@ function student_login(){
 
 }
 
+//INSERTING INTO REFEREES TABLE
+
+if (isset($_POST['btn-referee'])){
+    referees();
+
+}
+
+function referees(){
+    global $conn,$error;
+
+
+    $regno = ($_POST['User_ID']);
+    $fname = ($_POST['Firstname']);
+    $lname = ($_POST['Lastname']);
+    $relation = ($_POST['Relationship']);
+    $phone = ($_POST['Telephone']);
+    $add = ($_POST['Address']);
+    $record = "select * from referees   WHERE User_ID = '".$_SESSION ['suser']['User_ID']."'";
+    $check = mysqli_query($conn,$record);
+    $rowdata = mysqli_num_rows($check);
+    if ($rowdata == 0){
+        //User_ID 	Firstname 	Lastname 	Relationship 	Telephone 	Address
+        $recordinsert = "INSERT INTO referees (User_ID,Firstname,Lastname,Relationship,Telephone,Address) 
+        values('".$_SESSION ['suser']['User_ID']."','$fname','$lname','$relation','$phone','$add')";
+        if (mysqli_query($conn,$recordinsert)){
+            echo "Record inserted";
+            header("location:../student/index.php");
+        } else{
+            echo "Error:".$recordinsert. "". mysqli_error($conn);
+        }
+    } else{
+        echo "Record already exist";
+    }
+
+
+}
+
+
 function isLoggedIn(){
     if(isset($_SESSION['suser'])){
         return true;
