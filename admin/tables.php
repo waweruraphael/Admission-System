@@ -1,5 +1,6 @@
 <?php
 include('functions.php');
+include('report.php');
 if (!isLoggedIn()) {
     $_SESSION["msg"] = "Please Login";
     header('location:index.php?sub-cat default');
@@ -48,13 +49,34 @@ if (!isLoggedIn()) {
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
-                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+
+                    
+                    <form action="tables.php" method="post">
+                    <fieldset class="form-group">
+                        <select class="form-select" id="select-course" name="course">
+                            <option selected disabled >Select Course</option>
+                            <?php
+                            include_once 'db/db.php';
+                            
+                            $query = "select * from courses";
+                            $results = mysqli_query($conn, $query);
+                            while ($rows = mysqli_fetch_assoc(@$results)) {
+                            ?>
+                                <option value="<?php echo $rows['course_code']?>"><?php echo $rows['Description']; ?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
+                    </fieldset>
+                        <div class="btn-group" role="group" aria-label="Basic outlined example">
+
+                            <button name="show-student" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-eye fa-sm text-white-50"></i> Show </button>
+                            <button name="generate" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</button>
+                        </div>
+                    </form>
+
+
+
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -63,16 +85,7 @@ if (!isLoggedIn()) {
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <?php
-                                require_once('db/db.php');
-
-                                $sql = "SELECT User_ID,Surname,Firstname,Lastname,Gender,Admission_year,Photo FROM personal_details";
-                                $result = $conn->query($sql);
-                                $arr_users = [];
-                                if ($result->num_rows > 0) {
-                                    $arr_users = $result->fetch_all(MYSQLI_ASSOC);
-                                }
-                                ?>
+                                
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>

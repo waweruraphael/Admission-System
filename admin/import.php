@@ -58,10 +58,11 @@ if (isset($_POST['btn-register'])){
         $fname = $_POST['Firstname'];
 		$lname = $_POST['Lastname'];
 	    $gender = $_POST['Gender'];
+		$course = $_POST['course'];
 
 
-		$query = "INSERT into personal_details (User_ID,Surname,Firstname,Lastname,Gender)
-			VALUES('$regno','$surname', '$fname', '$lname' ,'$gender')";
+		$query = "INSERT into personal_details (User_ID,Surname,Firstname,Lastname,Gender,course_code,Admission_year)
+			VALUES('$regno','$surname', '$fname', '$lname' ,'$gender','$course',NOW())";
 			
 			if(mysqli_query($conn,$query)){
 				echo "record inserted successfully";

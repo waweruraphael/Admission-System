@@ -108,7 +108,7 @@ if (!isLoggedIn()) {
                                         </div>
                                         
                                         <div  class="col-12" >
-                                            <select class="control-control" id="select-course" name="Description">
+                                            <select class="control-control" id="select-course" name="course">
                                                 <?php
                                                 include_once 'db/db.php';
                                                 $query = "select * from courses";
