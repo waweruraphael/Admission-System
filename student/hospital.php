@@ -44,6 +44,20 @@ if (!isLoggedIn()) {
                     <!-- Content Row -->
                     <div class="row">
                         <!-- forms -->
+                        <?php
+                                if (isset($_SESSION['Success'])) {
+                                ?>
+                                    <div class="alert alert-success" role="alert">
+                                         <?php  echo $_SESSION['Success'];?>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <script>$(".alert").alert('close')</script>
+                                    </div>
+                                <?php
+                                    unset($_SESSION['Success']);
+                                }
+                                ?>
                         <div class="col-xl-12 col-lg-7">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
@@ -51,6 +65,7 @@ if (!isLoggedIn()) {
                                     <h6 class="m-0 font-weight-bold text-primary">Medical Record</h6>
                                 </div>
                                 <!-- Card Body -->
+                               
                                 <div class="card-body">
                                     <form action="hospitaldetail.php" method="POST" enctype="multipart/form-data">
                                         <p>Personal Information</p>
@@ -68,61 +83,61 @@ if (!isLoggedIn()) {
                                         <hr class="form-divider">
                                         <p>Have you suffered from or has symptom of any of the following</p>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms []" value="Tuberculosis" id="">
+                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms[]" value="Tuberculosis" id="">
                                             <label class="form-check-label" for="flexCheckDefault">
                                                 Tuberculosis or other chest infection
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms []" value="Fits" id="">
+                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms[]" value="Fits" id="">
                                             <label class="form-check-label" for="flexCheckChecked">
                                                 Fits, Nervous disease or fainting attacks
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms []" value="Rheumatic fever" id="">
+                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms[]" value="Rheumatic fever" id="">
                                             <label class="form-check-label" for="flexCheckChecked">
                                                 Heart Disease or Rheumatic fever
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms []" value="digestive-disease" id="">
+                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms[]" value="digestive-disease" id="">
                                             <label class="form-check-label" for="flexCheckChecked">
                                                 Any diseases of the digestive system
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms []" value="Urinary-disease" id="">
+                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms[]" value="Urinary-disease" id="">
                                             <label class="form-check-label" for="flexCheckChecked">
                                                 Any disease of the Genital-Urinary System
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms []" value="Allergies" id="">
+                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms[]" value="Allergies" id="">
                                             <label class="form-check-label" for="flexCheckChecked">
                                                 Allergies to food or drugs
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms []" value="Malaria" id="">
+                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms[]" value="Malaria" id="">
                                             <label class="form-check-label" for="flexCheckChecked">
                                                 Malaria
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms []" value="STI" id="">
+                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms[]" value="STI" id="">
                                             <label class="form-check-label" for="flexCheckChecked">
                                                 Sexually Transmitted Disease
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms []" value="polio" id="">
+                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms[]" value="polio" id="">
                                             <label class="form-check-label" for="flexCheckChecked">
                                                 Poliomyelitis
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms []" value="deformity" id="">
+                                            <input class="form-check-input" type="checkbox" name="Suffered_symptoms[]" value="deformity" id="">
                                             <label class="form-check-label" for="flexCheckChecked">
                                                 Any physical defect or deformity
                                             </label>
@@ -140,21 +155,21 @@ if (!isLoggedIn()) {
                                         <div>
                                             <p>Have you been immunized against the following diseases?</p>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="Immunization []" value="small pox" id="">
+                                                <input class="form-check-input" type="checkbox" name="Immunization[]" value="small pox" id="">
                                                 <label class="form-check-label" for="flexCheckChecked">
                                                     Smaillpox
                                                 </label>
                                             </div>
 
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="Immunization []" value="Tetanus" id="">
+                                                <input class="form-check-input" type="checkbox" name="Immunization[]" value="Tetanus" id="">
                                                 <label class="form-check-label" for="flexCheckChecked">
                                                     Tetanus
                                                 </label>
                                             </div>
 
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="Immunization []" value="Poliomyelitis" id="">
+                                                <input class="form-check-input" type="checkbox" name="Immunization[]" value="Poliomyelitis" id="">
                                                 <label class="form-check-label" for="flexCheckChecked">
                                                     Poliomyelitis
                                                 </label>

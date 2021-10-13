@@ -71,7 +71,7 @@ if (!isLoggedIn()) {
                         <div class="btn-group" role="group" aria-label="Basic outlined example">
 
                             <button name="show-student" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-eye fa-sm text-white-50"></i> Show </button>
-                            <button name="generate" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</button>
+                            
                         </div>
                     </form>
 
@@ -96,7 +96,7 @@ if (!isLoggedIn()) {
                                             <th>Gender</th>
                                             <th>Admission_year</th>
                                             <th>Image</th>
-                                            <th>Edit</th>
+                                            <th class="not-export-col">Edit</th>
 
                                         </tr>
                                     </thead>
@@ -130,13 +130,9 @@ if (!isLoggedIn()) {
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
-                    </div>
-                </div>
-            </footer>
+            
+            <? include("include/footer.php"); ?>
+            
             <!-- End of Footer -->
 
         </div>
@@ -149,6 +145,50 @@ if (!isLoggedIn()) {
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+    <script>
+        $(document).ready(function(){
+            $('#dataTable').DataTable({
+                dom: "Bfrtip",
+            buttons: [
+                
+                {
+                    text: 'csv',
+                    className: 'btn-primary',
+                    extend: 'csvHtml5',
+                    exportOptions: {
+                        columns: ':visible:not(.not-export-col)'
+                    }
+                },
+                {
+                    text: 'excel',
+                    className: 'btn-primary',
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        columns: ':visible:not(.not-export-col)'
+                    }
+                },
+                {
+                    text: 'pdf',
+                    extend: 'pdfHtml5',
+                    className: 'btn-primary',
+                    exportOptions: {
+                        columns: ':visible:not(.not-export-col)'
+                    }
+                },
+                {
+                    text: 'print',
+                    extend: 'print',
+                    className: 'btn-primary',
+                    exportOptions: {
+                        columns: ':visible:not(.not-export-col)'
+                    }
+                },
+            ],
+
+            })
+        })
+       
+    </script>
 
 
 

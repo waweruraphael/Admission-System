@@ -38,7 +38,7 @@ include('functions.php');
 		}else{
 			$msg = "Failed to upload image";
 		}
-       echo "record inserted successfully";
+       $_SESSION['Success'] = 'Record Inserted successfully';
        header("location:index.php");
 
     } else{

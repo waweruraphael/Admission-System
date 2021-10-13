@@ -19,7 +19,7 @@ function import_csv(){
 		$file = fopen($filename, "r");
 		while (($emapData = fgetcsv($file,10000,",")) !==FALSE){
 			//It will insert all ready registered students from our csv file` 
-			/*User_ID,Surname,Firstname,Lastname,Gender,sPword,Campus,course_code,Admission_year*/				
+							
 
 			$sql = "INSERT into personal_details (User_ID,Surname,Firstname,Lastname,Gender,sPword,Campus,course_code,Admission_year)
 			VALUES('$emapData[0]','$emapData[1]','$emapData[2]','$emapData[3]','$emapData[4]','$emapData[5]','$emapData[6]','$emapData[7]',NOW())";
@@ -27,7 +27,7 @@ function import_csv(){
 	 //we are using mysql_query function. it returns a resource on true else False on error
 
 	    if(mysqli_query($conn,$sql)){
-			echo "File imported successfully";
+			$_SESSION['success'] = "Files uploaded successfully";
 			header("location: ../admin/tables.php");
 
 		} else{
@@ -65,8 +65,8 @@ if (isset($_POST['btn-register'])){
 			VALUES('$regno','$surname', '$fname', '$lname' ,'$gender','$course',NOW())";
 			
 			if(mysqli_query($conn,$query)){
-				echo "record inserted successfully";
-				header("location:../admin/tables.php");
+				$_SESSION['success']= "record inserted successfully";
+				header("location:../admin/dashboard.php");
 		 
 			 } else{
 				echo "Error:".$query. "". mysqli_error($conn);

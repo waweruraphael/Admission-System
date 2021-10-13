@@ -49,6 +49,20 @@ if (!isLoggedIn()) {
                     <!-- Content Row -->
                     <div class="row">
                         <!-- forms -->
+                        <?php
+                                if (isset($_SESSION['Success'])) {
+                                ?>
+                                    <div class="alert alert-success" role="alert">
+                                         <?php  echo $_SESSION['Success'];?>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <script>$(".alert").alert('close')</script>
+                                    </div>
+                                <?php
+                                    unset($_SESSION['Success']);
+                                }
+                                ?>
                         <div class="col-xl-12 col-lg-7">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->

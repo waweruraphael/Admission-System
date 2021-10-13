@@ -1,8 +1,8 @@
 <?php
 include('../admin/functions.php');
 include('../admin/addcourse.php');
-if (!isLoggedIn()){
-    $_SESSION["msg"]="Please Login";
+if (!isLoggedIn()) {
+    $_SESSION["msg"] = "Please Login";
     header('location:index.php?sub-cat default');
 }
 
@@ -118,7 +118,7 @@ if (!isLoggedIn()){
                                             <?php
                                             require_once('db/db.php');
 
-                                            $sql = "SELECT course_code,Description,Faculty FROM courses ";
+                                            $sql = "SELECT course_code,Description,Faculty FROM courses group by Faculty ";
                                             $result = $conn->query($sql);
                                             $arr_users = [];
                                             if ($result->num_rows > 0) {
@@ -131,8 +131,8 @@ if (!isLoggedIn()){
                                                         <th>Course code</th>
                                                         <th>Course</th>
                                                         <th>Faculty</th>
-                                                        <th>Edit</th>
-                                                        <th>Delete</th>
+                                                        <th class="not-export-col">Edit</th>
+                                                        <th class="not-export-col">Delete</th>
                                                     </tr>
                                                 </thead>
 
@@ -143,7 +143,8 @@ if (!isLoggedIn()){
                                                                 <td><?php echo $user['course_code']; ?></td>
                                                                 <td><?php echo $user['Description']; ?></td>
                                                                 <td><?php echo $user['Faculty']; ?></td>
-                                                                <td><a href="dashboard.php?cat=contact&subcat=contact-email&edit=<?php echo $data['id']; ?>" class="text-success content-link"><i class=' far fa-edit'></i></a></td>
+
+                                                                <td><a data-bs-toggle="modal" data-bs-target="#exampleModal" href="#" class="text-primary edit" name="contact_email" id="<?php echo $data['id']; ?>"><i class='far fa-edit'></i></a></td>
                                                                 <td><a href="#" class="text-danger delete" name="contact_email" id="<?php echo $data['id']; ?>"><i class='far fa-trash-alt'></i></a></td>
                                                             </tr>
                                                         <?php } ?>
@@ -159,12 +160,31 @@ if (!isLoggedIn()){
 
                     <!-- Content Row -->
                     <div class="row">
+                        <script>
+                            var myModal = document.getElementById('myModal')
+                            var myInput = document.getElementById('myInput')
 
-                        <!-- Content Column -->
-                        <div class="col-lg-6 mb-4">
-                        </div>
-
-                        <div class="col-lg-6 mb-4">
+                            myModal.addEventListener('shown.bs.modal', function() {
+                                myInput.focus()
+                            })
+                        </script>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        ...
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -188,6 +208,44 @@ if (!isLoggedIn()){
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+    <script>
+        $(document).ready(function(){
+            $('#dataTable').DataTable({
+                dom: "Blfrtip",
+            buttons: [{
+                    text: 'csv',
+                    extend: 'csvHtml5',
+                    exportOptions: {
+                        columns: ':visible:not(.not-export-col)'
+                    }
+                },
+                {
+                    text: 'excel',
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        columns: ':visible:not(.not-export-col)'
+                    }
+                },
+                {
+                    text: 'pdf',
+                    extend: 'pdfHtml5',
+                    exportOptions: {
+                        columns: ':visible:not(.not-export-col)'
+                    }
+                },
+                {
+                    text: 'print',
+                    extend: 'print',
+                    exportOptions: {
+                        columns: ':visible:not(.not-export-col)'
+                    }
+                },
+            ],
+
+            })
+        })
+       
+    </script>
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -199,9 +257,7 @@ if (!isLoggedIn()){
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
-    <!-- Page level plugins -->
+    
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 

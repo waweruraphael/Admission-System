@@ -124,18 +124,18 @@ if (!isLoggedIn()) {
                                 ?>
                                  <hr class="sidebar-divider">
                                  <?php
-                                    $result = "SELECT personal_details.'".$_SESSION ['suser']['User_ID']."',courses.Description, personal_details.Admission_year\n"
+                                    $sql = "SELECT personal_details.'".$_SESSION ['suser']['User_ID']."',courses.Description, personal_details.Admission_year\n"
 
                                     . "FROM personal_details\n"
                                 
                                     . "INNER JOIN courses\n"
                                 
                                     . "ON personal_details.course_code=courses.course_code";
-                                    while ($row = mysqli_fetch_array($conn,$result)) {
+                                    while ($row = mysqli_fetch_array($conn,$sql)) {
                                         printf("ID: %s  Name: %s",  $row["Description"]);
                                     }
                                     
-                                    mysqli_free_result($conn,$result);
+                                    mysqli_free_result($conn,$sql);
 
                                 ?>
                                     
@@ -179,9 +179,7 @@ if (!isLoggedIn()) {
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+   
 
 </body>
 

@@ -34,11 +34,11 @@
                             <h3 class="text-center text-info">Login</h3>
                             <div class="form-group">
                                 <label for="username" class="text-info">Username:</label><br>
-                                <input type="text" name="User_ID" id="username" class="form-control">
+                                <input type="text" name="User_ID" id="username" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="password" class="text-info">Password:</label><br>
-                                <input type="password" name="password" id="password" class="form-control">
+                                <input type="password" name="password" id="password" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <input type="submit" name="login-btn" class="btn btn-info btn-md" value="Login">

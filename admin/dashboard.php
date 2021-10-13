@@ -26,6 +26,8 @@ if (!isLoggedIn()) {
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    
+
 
 </head>
 
@@ -54,17 +56,25 @@ if (!isLoggedIn()) {
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        
+
                     </div>
 
                     <!-- Content Row -->
 
 
                     <!-- Content Row -->
+                    <?php if (isset($_SESSION['success'])) : ?>
+                            <div class="success">
+                                <p>
+                                    <?php
+                                    echo $_SESSION['success'];
+                                    unset($_SESSION['success']);
+                                    ?>
+                                </p>
+                            </div>
+                        <?php endif ?>
 
                     <div class="row">
-
-                        <!-- Area Chart -->
                         <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
@@ -92,22 +102,22 @@ if (!isLoggedIn()) {
                                             <input type="text" class="form-control" name="Lastname" id="inputlastname">
                                         </div>
                                         <div class="col-md-6">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" value="Male" name="Gender" id="Gender1">
-                                            <label class="form-check-label" for="Gender1">
-                                                Male
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" value="Female" name="Gender" id="Gender2">
-                                            <label class="form-check-label" for="Gender1">
-                                                Female
-                                            </label>
-                                        </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" value="Male" name="Gender" id="Gender1">
+                                                <label class="form-check-label" for="Gender1">
+                                                    Male
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" value="Female" name="Gender" id="Gender2">
+                                                <label class="form-check-label" for="Gender1">
+                                                    Female
+                                                </label>
+                                            </div>
 
                                         </div>
-                                        
-                                        <div  class="col-12" >
+
+                                        <div class="col-12">
                                             <select class="control-control" id="select-course" name="course">
                                                 <?php
                                                 include_once 'db/db.php';
@@ -127,7 +137,7 @@ if (!isLoggedIn()) {
                                     </form>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
                         <div class="col-lg-4">
                             <div class="card">
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -195,10 +205,7 @@ if (!isLoggedIn()) {
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
-
+   
 </body>
 
 </html>
