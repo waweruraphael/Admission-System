@@ -25,6 +25,7 @@ function student_login(){
         array_push($error,"please enter your password");
     }
     if(count($error) == 0){
+        $password = md5( $password);
         
         $sql = "SELECT * FROM personal_details WHERE User_ID = '$uid' AND sPword  = '$password' LIMIT 1 ";
         $results = mysqli_query($conn,$sql);
@@ -58,10 +59,8 @@ if (isset($_POST['btn-referee'])){
 }
 
 function referees(){
-    global $conn,$error;
+    global $conn;
 
-
-    $regno = ($_POST['User_ID']);
     $fname = ($_POST['Firstname']);
     $lname = ($_POST['Lastname']);
     $relation = ($_POST['Relationship']);
@@ -99,9 +98,6 @@ function isLoggedIn(){
 /*logout */
 if (isset($_GET['logout'])){
    session_destroy();
-   echo "<div class='success-msg'>";
-		echo "You have successfully logout";
-		echo "</div>";
    unset($_SESSION['suser']);
    header('location:login.php');
    

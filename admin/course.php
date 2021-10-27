@@ -53,15 +53,41 @@ if (!isLoggedIn()) {
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
+
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        <h1 class="h3 mb-0 text-gray-800">Course List</h1>
+
                     </div>
+
 
                     <!-- Content Row -->
 
                     <div class="row">
+                        <!-- messages -->
+                        <?php
+                        if (isset($_SESSION['error'])) {
+                            echo "
+            <div class='alert alert-danger alert-dismissible'>
+              <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+              <h4><i class='icon fa fa-warning'></i> Error!</h4>
+              " . $_SESSION['error'] . "
+            </div>
+          ";
+                            unset($_SESSION['error']);
+                        }
+                        if (isset($_SESSION['success'])) {
+                            echo "
+            <div class='alert alert-success alert-dismissible'>
+              <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+              <h4><i class='icon fa fa-check'></i> Success!</h4>
+              " . $_SESSION['success'] . "
+            </div>
+          ";
+                            unset($_SESSION['success']);
+                        }
+                        ?>
+                        <!---end message -->
 
 
                         <div class="col-xl-5 col-lg-7">
@@ -91,20 +117,31 @@ if (!isLoggedIn()) {
                                             <input name="Description" class="form-control" placeholder="Course" type="text">
                                         </div> <!-- form-group// -->
                                         <div class="form-group input-group">
-                                            <div class="input-group-prepend">
+                                        <div class="input-group-prepend">
                                                 <span class="input-group-text"> </span>
                                             </div>
-                                            <input name="Faculty" class="form-control" placeholder="Faculty" type="text">
+                                        <select class="form-select" name="Faculty" aria-label="Default select example">
+                                            <option selected>Select Faculty</option>
+                                            <option value="Computing and Informatics">Computing and Informatics</option>
+                                            <option value="Medicine">Medicine</option>
+                                            <option value="Education">Education</option>
+                                            <option value="Biological and Physical Sciences">Biological and Physical Sciences</option>
+                                            <option value="Public Health and Community Development.">Public Health and Community Development.</option>
+                                            <option value="Environment and Earth Sciences">Environment and Earth Sciences</option>
+                                            <option value="Development and Strategic Studies">Development and Strategic Studies</option>
+                                            <option value=" BUSINESS AND MANAGEMENT SCIENCES"> BUSINESS AND MANAGEMENT SCIENCES</option>
+                                        
+                                        </select>
                                         </div> <!-- form-group// -->
                                         <div class="form-group">
-                                            <button name="Submit" type="submit" class="btn btn-primary btn-block" onclick="show_alert();"> Add Course </button>
+                                            <button name="Submit" type="submit" class="btn btn-primary btn-block"> Add Course </button>
                                         </div> <!-- form-group// -->
                                     </form>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Pie Chart -->
+                        <!-- add courses -->
                         <div class="col-xl-7 col-lg-7">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
@@ -118,7 +155,7 @@ if (!isLoggedIn()) {
                                             <?php
                                             require_once('db/db.php');
 
-                                            $sql = "SELECT course_code,Description,Faculty FROM courses group by Faculty ";
+                                            $sql = "SELECT DISTINCT  course_code,Description,Faculty FROM courses ORDER BY Description, Faculty ASC ";
                                             $result = $conn->query($sql);
                                             $arr_users = [];
                                             if ($result->num_rows > 0) {
@@ -143,9 +180,10 @@ if (!isLoggedIn()) {
                                                                 <td><?php echo $user['course_code']; ?></td>
                                                                 <td><?php echo $user['Description']; ?></td>
                                                                 <td><?php echo $user['Faculty']; ?></td>
+                                                                <td><button type="button" class="text-primary edit btn btn-sucess btn-sm px-3" id="updateBtn"><i class="fas fa-pencil-alt"></i></button></td>
 
                                                                 <td><a data-bs-toggle="modal" data-bs-target="#exampleModal" href="#" class="text-primary edit" name="contact_email" id="<?php echo $data['id']; ?>"><i class='far fa-edit'></i></a></td>
-                                                                <td><a href="#" class="text-danger delete" name="contact_email" id="<?php echo $data['id']; ?>"><i class='far fa-trash-alt'></i></a></td>
+
                                                             </tr>
                                                         <?php } ?>
                                                     <?php } ?>
@@ -158,34 +196,51 @@ if (!isLoggedIn()) {
                         </div>
                     </div>
 
-                    <!-- Content Row -->
-                    <div class="row">
-                        <script>
-                            var myModal = document.getElementById('myModal')
-                            var myInput = document.getElementById('myInput')
 
-                            myModal.addEventListener('shown.bs.modal', function() {
-                                myInput.focus()
-                            })
-                        </script>
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        ...
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header text-center">
+                                    <h4 class="modal-title w-100 font-weight-bold">Update Courses</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
+                                <form action="course.php" method="POST">
+                                    <div class="modal-body mx-3">
+                                        <div class="md-form mb-5">
+
+                                            <input type="text" id="course_code" class="form-control ">
+                                            <label data-error="wrong" data-success="right">Course Code</label>
+                                        </div>
+                                        <div class="md-form mb-5">
+
+                                            <input type="text" id="description" class="form-control ">
+                                            <label data-error="wrong" data-success="right">Description</label>
+                                        </div>
+
+                                        <div class="md-form mb-4">
+
+                                            <input type="text" id="faculty" class="form-control ">
+                                            <label data-error="wrong" data-success="right">Faculty</label>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer d-flex justify-content-center">
+                                        <button class="btn btn-primary" name="Update">Update</button>
+                                    </div>
+                                </form>
+
                             </div>
                         </div>
+                    </div>
+
+                    <!-- /.end modal -->
+
+                    <div class="row">
+
+
                     </div>
 
                 </div>
@@ -209,42 +264,62 @@ if (!isLoggedIn()) {
         <i class="fas fa-angle-up"></i>
     </a>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function() {
             $('#dataTable').DataTable({
-                dom: "Blfrtip",
-            buttons: [{
-                    text: 'csv',
-                    extend: 'csvHtml5',
-                    exportOptions: {
-                        columns: ':visible:not(.not-export-col)'
-                    }
-                },
-                {
-                    text: 'excel',
-                    extend: 'excelHtml5',
-                    exportOptions: {
-                        columns: ':visible:not(.not-export-col)'
-                    }
-                },
-                {
-                    text: 'pdf',
-                    extend: 'pdfHtml5',
-                    exportOptions: {
-                        columns: ':visible:not(.not-export-col)'
-                    }
-                },
-                {
-                    text: 'print',
-                    extend: 'print',
-                    exportOptions: {
-                        columns: ':visible:not(.not-export-col)'
-                    }
-                },
-            ],
+                dom: "<'row'<'col-md-6'B><'col-md-6'f>>" + "rt" + "<'row'<'col-md-6'i><'col-md-6'p>>",
+                buttons: [{
+                        text: 'csv',
+                        extend: 'csvHtml5',
+                        exportOptions: {
+                            columns: ':visible:not(.not-export-col)'
+                        }
+                    },
+                    {
+                        text: 'excel',
+                        extend: 'excelHtml5',
+                        backgroundColor: 'LightGreen',
+                        exportOptions: {
+                            columns: ':visible:not(.not-export-col)'
+                        }
+                    },
+                    {
+                        text: 'pdf',
+                        extend: 'pdfHtml5',
+                        exportOptions: {
+                            columns: ':visible:not(.not-export-col)'
+                        }
+                    },
+                    {
+                        text: 'print',
+                        extend: 'print',
+                        exportOptions: {
+                            columns: ':visible:not(.not-export-col)'
+                        }
+                    },
+                ],
+                "bDestroy": true,
+            })
+
+            var table = $('#dataTable').DataTable();
+
+            table.on('click', '#updateBtn', function() {
+                $('#modalRegisterForm').modal('show');
+
+                //Get the courses details from table row
+                $tr = $(this).closest('tr');
+                var data = $tr.children("td").map(function() {
+                    return $(this).text();
+                }).get();
+                console.log(data);
+                //assign data
+                $('#course_code').val(data[0]);
+                $('#description').val(data[1]);
+                $('#faculty').val(data[2]);
+
+
 
             })
         })
-       
     </script>
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -257,7 +332,7 @@ if (!isLoggedIn()) {
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level custom scripts -->
-    
+
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 

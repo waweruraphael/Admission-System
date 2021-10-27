@@ -38,6 +38,7 @@ function login(){
                 header('location: ../admin/dashboard.php');
              } else{
                  $_SESSION['user'] =$user;
+                 $_SESSION['error'] = "Wrong username and password";
                  header('location: index.php');
              }
         } else{

@@ -9,15 +9,31 @@
 
     $sql = "INSERT INTO courses(course_code,Description,Faculty) VALUES('$code','$course','$faculty')";
      if (mysqli_query($conn,$sql)){
-      echo "Course added successully";
+      $_SESSION['success'] = "Course added successully";
       header("location: ../admin/course.php");
       
-
      } else{
-         echo"Error:". $sql. "". mysqli_error($conn);
+      $_SESSION['error'] = "Error occured.Please try again";
          header("location: ../admin/course.php");
           
 
+     }
+     if(isset($_POST['Update'])){
+      $code = mysqli_real_escape_string($conn,$_POST['course_code']);  
+      $course = mysqli_real_escape_string($conn,$_POST['Description']);
+      $faculty =mysqli_real_escape_string( $conn,$_POST['Faculty']);
+  
+      $sql = "UPDATE courses  SET  Description = '".$course."' Faculty= '".$faculty."'  WHERE course_code = '".$code."' ";
+      if (mysqli_query($conn,$sql)){
+        $_SESSION['success'] = "Course added successully";
+        header("location: ../admin/course.php");
+        
+       } else{
+        $_SESSION['error'] = "Error occured.Please try again";
+         header("location: ../admin/course.php");
+  
+       }  
+         
      }
   
 
@@ -26,4 +42,4 @@
 
    }
 
-?>
+   

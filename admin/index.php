@@ -28,6 +28,18 @@
     <div id="login">
         <div class="container">
             <div id="login-row" class="row justify-content-center align-items-center">
+                <?php
+                 if (isset($_SESSION['error'])) {
+                    echo "
+        <div class='alert alert-danger alert-dismissible'>
+          <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+          <h4><i class='icon fa fa-warning'></i> Error!</h4>
+          " . $_SESSION['error'] . "
+        </div>
+      ";
+                    unset($_SESSION['error']);
+                }
+                ?>
                 <div id="login-column" class="col-md-4">
                     <div id="login-box" class="col-md-12">
                         <form id="login-form" class="form" action="index.php" method="post">

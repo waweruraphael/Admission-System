@@ -18,7 +18,7 @@ if (!isLoggedIn()) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dashboard</title>
+    <title>UAMS||Dashboard</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -26,7 +26,7 @@ if (!isLoggedIn()) {
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    
+
 
 
 </head>
@@ -60,22 +60,35 @@ if (!isLoggedIn()) {
                     </div>
 
                     <!-- Content Row -->
+                    <?php
+                    if (isset($_SESSION['error'])) {
+                        echo "
+            <div class='alert alert-danger alert-dismissible'>
+              <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+              <h4><i class='icon fa fa-warning'></i> Error!</h4>
+              " . $_SESSION['error'] . "
+            </div>
+          ";
+                        unset($_SESSION['error']);
+                    }
+                    if (isset($_SESSION['success'])) {
+                        echo "
+            <div class='alert alert-success alert-dismissible'>
+              <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+              <h4><i class='icon fa fa-check'></i> Success!</h4>
+              " . $_SESSION['success'] . "
+            </div>
+          ";
+                        unset($_SESSION['success']);
+                    }
+                    ?>
 
 
                     <!-- Content Row -->
-                    <?php if (isset($_SESSION['success'])) : ?>
-                            <div class="success">
-                                <p>
-                                    <?php
-                                    echo $_SESSION['success'];
-                                    unset($_SESSION['success']);
-                                    ?>
-                                </p>
-                            </div>
-                        <?php endif ?>
+
 
                     <div class="row">
-                        <div class="col-xl-8 col-lg-7">
+                        <div class="col-xl-7 col-lg-7">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -85,10 +98,7 @@ if (!isLoggedIn()) {
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <form class="row g-3" action="import.php" method="POST">
-                                        <div class="col-md-6">
-                                            <label class="form-label">Reg No</label>
-                                            <input type="text" class="form-control" name="User_ID" id="inputregno">
-                                        </div>
+
                                         <div class="col-md-6">
                                             <label class="form-label">Surname</label>
                                             <input type="text" class="form-control" name="Surname" id="inputsurname">
@@ -118,7 +128,10 @@ if (!isLoggedIn()) {
                                         </div>
 
                                         <div class="col-12">
+
                                             <select class="control-control" id="select-course" name="course">
+                                                <option selected disabled>---Select Course---</option>
+
                                                 <?php
                                                 include_once 'db/db.php';
                                                 $query = "select * from courses";
@@ -137,8 +150,8 @@ if (!isLoggedIn()) {
                                     </form>
                                 </div>
                             </div>
-                        </div> 
-                        <div class="col-lg-4">
+                        </div>
+                        <div class="col-lg-5">
                             <div class="card">
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-primary">Register students</h6>
@@ -147,7 +160,25 @@ if (!isLoggedIn()) {
                                 <div class="card-body">
                                     <div class="span6" id="form-login">
                                         <form class="form-horizontal well" action="import.php" method="post" name="upload_excel" enctype="multipart/form-data">
+
                                             <fieldset>
+                                                <div class="col-12">
+
+                                                    <select class="control-control" id="select-course" name="course">
+                                                        <option selected disabled>---Select Course---</option>
+
+                                                        <?php
+                                                        include_once 'db/db.php';
+                                                        $query = "select * from courses";
+                                                        $results = mysqli_query($conn, $query);
+                                                        while ($rows = mysqli_fetch_assoc(@$results)) {
+                                                        ?>
+                                                            <option value="<?php echo $rows['course_code']; ?>"><?php echo $rows['Description']; ?></option>
+                                                        <?php
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
                                                 <legend>Import CSV/Excel file</legend>
                                                 <div class="control-group">
                                                     <div class="control-label">
@@ -205,7 +236,7 @@ if (!isLoggedIn()) {
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
-   
+
 </body>
 
 </html>

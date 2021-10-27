@@ -77,7 +77,7 @@ if (!isLoggedIn()) {
 
 
 
-                    <!-- DataTales Example -->
+                    <!-- admission list -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Admission List</h6>
@@ -111,7 +111,8 @@ if (!isLoggedIn()) {
                                                     <td><?php echo $user['Gender']; ?></td>
                                                     <td><?php echo $user['Admission_year']; ?></td>
                                                     <td><?php echo "<img style='width: 50px; length: 50px;' src='images/" . $user['Photo'] . "' >"; ?></td>
-                                                    <td><a href="dashboard.php?cat=contact&subcat=contact-email&edit=<?php echo $data['id']; ?>" class="text-success content-link"><i class=' far fa-edit'></i></a></td>
+                                                    <td><button type="submit" name="edit" class=" text-primary edit btn btn-sucess btn-sm px-3"> <i class="fas fa-pencil-alt"></i></button></td>
+                                                    
 
                                                 </tr>
                                             <?php } ?>
@@ -148,7 +149,7 @@ if (!isLoggedIn()) {
     <script>
         $(document).ready(function(){
             $('#dataTable').DataTable({
-                dom: "Bfrtip",
+                dom: "<'row'<'col-md-6'B><'col-md-6'f>>" + "rt" + "<'row'<'col-md-6'i><'col-md-6'p>>",
             buttons: [
                 
                 {
