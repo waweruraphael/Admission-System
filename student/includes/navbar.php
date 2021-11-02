@@ -54,7 +54,7 @@
                         <h6 class="collapse-header">Application Form:</h6>
                         <a class="collapse-item" href="personal.php">Personal Information</a>
                         <a  class="collapse-item" href="referee.php">Referees</a>
-                        <a class="collapse-item" href="#">School Information</a>
+                        
                     </div>
                 </div>
             </li>
@@ -93,10 +93,7 @@
     <!-- Custom scripts for all pages-->
     <script src="../admin/js/sb-admin-2.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="../admin/js/demo/chart-area-demo.js"></script>
-    <script src="../admin/js/demo/chart-pie-demo.js"></script>
-
+   
 </body>
 
 </html>

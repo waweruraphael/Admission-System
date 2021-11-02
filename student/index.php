@@ -119,23 +119,42 @@ if (!isLoggedIn()) {
                                 <!-- Card Body -->
                                 <div class="card-body">
                                 <?php
+                                $sql = "SELECT Photo FROM personal_details where User_ID = '".$_SESSION ['suser']['User_ID']."'";
+                                $records = mysqli_query($conn,$sql);
+                                while($data = mysqli_fetch_array($records))
+                                    {
+                                       
+                                            echo "      
+                              <i  class=' far fa-book-alt'></i> " . $data['Photo'] . "
+                              
+                          ";
+                                    }
+                                    
+
                                     echo $_SESSION['suser']['Photo'];
                                     
                                 ?>
                                  <hr class="sidebar-divider">
                                  <?php
-                                    $sql = "SELECT personal_details.'".$_SESSION ['suser']['User_ID']."',courses.Description, personal_details.Admission_year\n"
+                                    $sql = "SELECT personal_details.User_ID,courses.Description FROM personal_details 
+                                    INNER JOIN courses ON personal_details.course_code = courses.course_code AND User_ID = '".$_SESSION ['suser']['User_ID']."'";
+                                    $records=  mysqli_query($conn,$sql);
+                                    while($data = mysqli_fetch_array($records))
+                                    {
+                                       
+                                        
+                                            echo "
+                            
+                              
+                              <h4><i  class=' far fa-book-alt'></i> " . $data['Description'] . "</h4>
+                              
+                            
+                          ";
 
-                                    . "FROM personal_details\n"
-                                
-                                    . "INNER JOIN courses\n"
-                                
-                                    . "ON personal_details.course_code=courses.course_code";
-                                    while ($row = mysqli_fetch_array($conn,$sql)) {
-                                        printf("ID: %s  Name: %s",  $row["Description"]);
+                          
                                     }
                                     
-                                    mysqli_free_result($conn,$sql);
+
 
                                 ?>
                                     

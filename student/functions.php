@@ -41,7 +41,7 @@ function student_login(){
                  header('location: login.php');
              }
         } else{
-            array_push($error,"Wrong Username/password");
+            $_SESSION['error'] = "The username or the password does not exit";
 
             
         }
@@ -74,13 +74,14 @@ function referees(){
         $recordinsert = "INSERT INTO referees (User_ID,Firstname,Lastname,Relationship,Telephone,Address) 
         values('".$_SESSION ['suser']['User_ID']."','$fname','$lname','$relation','$phone','$add')";
         if (mysqli_query($conn,$recordinsert)){
-            echo "Record inserted";
-            header("location:../student/index.php");
+            $_SESSION['success'] = "Course added successully";
+      
         } else{
+            $_SESSION['error'] = "Error occured.Please try again";
             echo "Error:".$recordinsert. "". mysqli_error($conn);
         }
     } else{
-        echo "Record already exist";
+        $_SESSION['error'] = "Error occured.Please try again Record already exist";
     }
 
 

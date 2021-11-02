@@ -52,20 +52,8 @@ if (!isLoggedIn()) {
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Course List</h1>
-
-                    </div>
-
-
-                    <!-- Content Row -->
-
-                    <div class="row">
-                        <!-- messages -->
-                        <?php
+                       <!-- messages -->
+                       <?php
                         if (isset($_SESSION['error'])) {
                             echo "
             <div class='alert alert-danger alert-dismissible'>
@@ -89,6 +77,19 @@ if (!isLoggedIn()) {
                         ?>
                         <!---end message -->
 
+
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Course List</h1>
+
+                    </div>
+
+
+                    <!-- Content Row -->
+
+                    <div class="row">
+                     
 
                         <div class="col-xl-5 col-lg-7">
                             <div class="card shadow mb-4">
@@ -153,10 +154,10 @@ if (!isLoggedIn()) {
                                     <div class="card-body">
                                         <div class="table-responsive">
                                             <?php
-                                            require_once('db/db.php');
+                                            
 
-                                            $sql = "SELECT DISTINCT  course_code,Description,Faculty FROM courses ORDER BY Description, Faculty ASC ";
-                                            $result = $conn->query($sql);
+                                            $sql = "SELECT  course_code,Description,Faculty FROM courses ORDER BY Faculty ASC ";
+                                            $result = mysqli_query($conn,$sql);
                                             $arr_users = [];
                                             if ($result->num_rows > 0) {
                                                 $arr_users = $result->fetch_all(MYSQLI_ASSOC);
@@ -210,20 +211,23 @@ if (!isLoggedIn()) {
                                 <form action="course.php" method="POST">
                                     <div class="modal-body mx-3">
                                         <div class="md-form mb-5">
+                                        <label data-error="wrong" data-success="right">Course Code</label>
 
-                                            <input type="text" id="course_code" class="form-control ">
-                                            <label data-error="wrong" data-success="right">Course Code</label>
+                                            <input type="text" name="course_code" id="course_code" class="form-control ">
+                                            
                                         </div>
                                         <div class="md-form mb-5">
+                                        <label data-error="wrong" data-success="right">Description</label>
 
-                                            <input type="text" id="description" class="form-control ">
-                                            <label data-error="wrong" data-success="right">Description</label>
+                                            <input type="text" name="Description" id="description"  class="form-control ">
+                                           
                                         </div>
 
                                         <div class="md-form mb-4">
+                                        <label data-error="wrong" data-success="right">Faculty</label>
 
-                                            <input type="text" id="faculty" class="form-control ">
-                                            <label data-error="wrong" data-success="right">Faculty</label>
+                                            <input type="text" name="Faculty" id="faculty" class="form-control ">
+                                            
                                         </div>
 
                                     </div>

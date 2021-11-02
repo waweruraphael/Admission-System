@@ -159,7 +159,7 @@ if (!isLoggedIn()) {
                                 </div>
                                 <div class="card-body">
                                     <div class="span6" id="form-login">
-                                        <form class="form-horizontal well" action="import.php" method="post" name="upload_excel" enctype="multipart/form-data">
+                                        <form class="form-horizontal well"  id="myForm" action="import.php" method="post" name="upload_excel" enctype="multipart/form-data">
 
                                             <fieldset>
                                                 <div class="col-12">
@@ -185,7 +185,7 @@ if (!isLoggedIn()) {
                                                         <label>CSV/Excel File:</label>
                                                     </div>
                                                     <div class="controls">
-                                                        <input type="file" name="file" id="file" class="input-large">
+                                                        <input type="file" name="file" id="csvFile" class="input-large">
                                                     </div>
                                                 </div>
 
@@ -223,6 +223,54 @@ if (!isLoggedIn()) {
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+    <script>
+    const myForm = document.getElementById("myForm");
+    const csvFile = document.getElementById("csvFile");
+
+    function csvToArray(str, delimiter = ",") {
+
+      // slice from start of text to the first \n index
+      // use split to create an array from string by delimiter
+      const headers = str.slice(0, str.indexOf("\n")).split(delimiter);
+
+      // slice from \n index + 1 to the end of the text
+      // use split to create an array of each csv value row
+      const rows = str.slice(str.indexOf("\n") + 1).split("\n");
+
+      
+
+      // return the array
+      return arr;
+    }
+    $("#myForm").click(function() {
+        drawNumbers();
+        console.log(csvToArray);
+        var jsoncsvToArray = JSON.stringify(csvToArray);
+
+        $.ajax({
+            url: "admin/import.php",
+            type: 'POST',
+            data: {data:jsoncsvToArray},
+            dataType: "json",
+            async: false,
+            cache: false,
+        });
+    });
+
+    myForm.addEventListener("Import", function (e) {
+      e.preventDefault();
+      const input = csvFile.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        const text = e.target.result;
+        const data = csvToArray(text);
+        document.write(JSON.stringify(data));
+      };
+      
+      reader.readAsText(input);
+    });
+  </script>
 
 
 

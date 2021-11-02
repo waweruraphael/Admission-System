@@ -50,28 +50,28 @@ if (!isLoggedIn()) {
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Tables</h1>
 
-                    
+
                     <form action="tables.php" method="post">
-                    <fieldset class="form-group">
-                        <select class="form-select" id="select-course" name="course">
-                            <option selected disabled >Select Course</option>
-                            <?php
-                            include_once 'db/db.php';
-                            
-                            $query = "select * from courses";
-                            $results = mysqli_query($conn, $query);
-                            while ($rows = mysqli_fetch_assoc(@$results)) {
-                            ?>
-                                <option value="<?php echo $rows['course_code']?>"><?php echo $rows['Description']; ?></option>
-                            <?php
-                            }
-                            ?>
-                        </select>
-                    </fieldset>
+                        <fieldset class="form-group">
+                            <select class="form-select" id="select-course" name="course">
+                                <option selected disabled>Select Course</option>
+                                <?php
+                                include_once 'db/db.php';
+
+                                $query = "select * from courses";
+                                $results = mysqli_query($conn, $query);
+                                while ($rows = mysqli_fetch_assoc(@$results)) {
+                                ?>
+                                    <option value="<?php echo $rows['course_code'] ?>"><?php echo $rows['Description']; ?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                        </fieldset>
                         <div class="btn-group" role="group" aria-label="Basic outlined example">
 
                             <button name="show-student" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-eye fa-sm text-white-50"></i> Show </button>
-                            
+
                         </div>
                     </form>
 
@@ -85,7 +85,7 @@ if (!isLoggedIn()) {
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                
+
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -111,8 +111,8 @@ if (!isLoggedIn()) {
                                                     <td><?php echo $user['Gender']; ?></td>
                                                     <td><?php echo $user['Admission_year']; ?></td>
                                                     <td><?php echo "<img style='width: 50px; length: 50px;' src='images/" . $user['Photo'] . "' >"; ?></td>
-                                                    <td><button type="submit" name="edit" class=" text-primary edit btn btn-sucess btn-sm px-3"> <i class="fas fa-pencil-alt"></i></button></td>
-                                                    
+                                                    <td><button type="button" class="text-primary edit btn btn-sucess btn-sm px-3" id="updateBtn"><i class="fas fa-pencil-alt"></i></button></td>
+
 
                                                 </tr>
                                             <?php } ?>
@@ -126,18 +126,73 @@ if (!isLoggedIn()) {
 
                 </div>
                 <!-- /.container-fluid -->
+                <!-- Modal -->
+                <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header text-center">
+                                <h4 class="modal-title w-100 font-weight-bold">Update Student Details</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form action="#" method="POST">
+                                <div class="modal-body mx-3">
+                                    <div class="md-form mb-5">
+                                        <label data-error="wrong" data-success="right">RegNo</label>
 
+                                        <input type="text" name="User_ID" id="User_ID" class="form-control ">
+
+                                    </div>
+                                    <div class="md-form mb-5">
+                                        <label data-error="wrong" data-success="right">Surname</label>
+
+                                        <input type="text" name="Surname" id="Surname" class="form-control ">
+
+                                    </div>
+
+                                    <div class="md-form mb-4">
+                                        <label data-error="wrong" data-success="right">Firstname</label>
+
+                                        <input type="text" name="Firstname" id="Firstname" class="form-control ">
+
+                                    </div>
+                                    <div class="md-form mb-4">
+                                        <label data-error="wrong" data-success="right">Lastname</label>
+
+                                        <input type="text" name="Lastname" id="Lastname" class="form-control ">
+
+                                    </div>
+                                    <label data-error="wrong" data-success="right">Lastname</label>
+
+                                    <input type="text" name="Gender" id="Gender" class="form-control ">
+
+                                </div>
+
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center">
+                            <button class="btn btn-primary" name="Update">Update</button>
+                        </div>
+                        </form>
+
+
+                    </div>
+                </div>
             </div>
-            <!-- End of Main Content -->
 
-            <!-- Footer -->
-            
-            <? include("include/footer.php"); ?>
-            
-            <!-- End of Footer -->
+            <!-- /.end modal -->
 
         </div>
-        <!-- End of Content Wrapper -->
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+
+        <? include("include/footer.php"); ?>
+
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
 
     </div>
     <!-- End of Page Wrapper -->
@@ -147,48 +202,69 @@ if (!isLoggedIn()) {
         <i class="fas fa-angle-up"></i>
     </a>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function() {
             $('#dataTable').DataTable({
                 dom: "<'row'<'col-md-6'B><'col-md-6'f>>" + "rt" + "<'row'<'col-md-6'i><'col-md-6'p>>",
-            buttons: [
-                
-                {
-                    text: 'csv',
-                    className: 'btn-primary',
-                    extend: 'csvHtml5',
-                    exportOptions: {
-                        columns: ':visible:not(.not-export-col)'
-                    }
-                },
-                {
-                    text: 'excel',
-                    className: 'btn-primary',
-                    extend: 'excelHtml5',
-                    exportOptions: {
-                        columns: ':visible:not(.not-export-col)'
-                    }
-                },
-                {
-                    text: 'pdf',
-                    extend: 'pdfHtml5',
-                    className: 'btn-primary',
-                    exportOptions: {
-                        columns: ':visible:not(.not-export-col)'
-                    }
-                },
-                {
-                    text: 'print',
-                    extend: 'print',
-                    className: 'btn-primary',
-                    exportOptions: {
-                        columns: ':visible:not(.not-export-col)'
-                    }
-                },
-            ],
+                buttons: [
+
+                    {
+                        text: 'csv',
+                        className: 'btn-primary',
+                        extend: 'csvHtml5',
+                        exportOptions: {
+                            columns: ':visible:not(.not-export-col)'
+                        }
+                    },
+                    {
+                        text: 'excel',
+                        className: 'btn-primary',
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            columns: ':visible:not(.not-export-col)'
+                        }
+                    },
+                    {
+                        text: 'pdf',
+                        extend: 'pdfHtml5',
+                        className: 'btn-primary',
+                        exportOptions: {
+                            columns: ':visible:not(.not-export-col)'
+                        }
+                    },
+                    {
+                        text: 'print',
+                        extend: 'print',
+                        className: 'btn-primary',
+                        exportOptions: {
+                            columns: ':visible:not(.not-export-col)'
+                        }
+                    },
+                ],
+                "bDestroy": true,
+
+            })
+            var table = $('#dataTable').DataTable();
+
+            table.on('click', '#updateBtn', function() {
+                $('#modalRegisterForm').modal('show');
+
+                //Get the courses details from table row
+                $tr = $(this).closest('tr');
+                var data = $tr.children("td").map(function() {
+                    return $(this).text();
+                }).get();
+                console.log(data);
+                //assign data
+                $('#User_ID').val(data[0]);
+                $('#Surname').val(data[1]);
+                $('#Firstname').val(data[2]);
+                $('#Lastname').val(data[3]);
+                $('#Gender').val(data[4]);
+
+
 
             })
         })
-       
     </script>
 
 

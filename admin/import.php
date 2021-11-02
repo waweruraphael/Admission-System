@@ -42,8 +42,8 @@ function import_csv()
 			//It will insert all ready registered students from our csv file` 
 
 
-			$sql = sprintf("INSERT into personal_details (User_ID,Surname,Firstname,Lastname,Gender,course_code,sPword,Admission_year)
-			VALUES('$regNo','$emapData[0]','$emapData[1]','$emapData[2]','$emapData[3]','$course_code','$pwd','$curret_year')");
+			$sql = "INSERT  into personal_details (User_ID,Surname,Firstname,Lastname,Gender,course_code,sPword,Admission_year)
+			VALUES('$regNo','$emapData[0]','$emapData[1]','$emapData[2]','$emapData[3]','$course_code','$pwd','$curret_year') ON DUPLICATE KEY UPDATE $regNo = $regNo" ;
 
 			if (mysqli_query($conn, $sql)) {
 				$_SESSION['success'] = "Files uploaded successfully";
